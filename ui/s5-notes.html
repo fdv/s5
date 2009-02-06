@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--  Do not edit this document! The system will likely break if you do. -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Notes</title>
+<link rel="stylesheet" href="default/notes.css" type="text/css" />
+<script src="../lib/MochiKit.js" type="text/javascript"></script>
+<script type="text/javascript">
+// <![CDATA[
+  connect(document, 'onkeyup', opener.s, 'keys');
+  connect(document, 'onkeypress', opener.s, 'trap');
+  connect(document, 'onclick', opener.s, 'clicker');
+  connect(window, 'onunload',function() { opener.s.s5NotesWindowLoaded = false; });
+  connect(window, 'onload', function(){ 
+    opener.s.s5NotesWindowLoaded = true;
+    connect(document.getElementById('minimize-elapsed'), 'onclick', function() {opener.s.minimizeTimer('elapsed'); return false;})
+    document.getElementById('minus').onclick = function() {opener.s.alterRemainingTime('-5'); return false;}
+    document.getElementById('plus').onclick = function() {opener.s.alterRemainingTime('5'); return false;}
+    document.getElementById('reset-elapsed').onclick = function() {opener.s.resetElapsedTime(); return false;}
+    document.getElementById('minimize-remaining').onclick = function() {opener.s.minimizeTimer('remaining'); return false;}
+    // FIXME: the following doesn't appear to work right in Mac Firefox
+    //          clicking in the form causes slides to change. Values cannot be entered in the box.
+    document.getElementById('formy').onsubmit = function() {opener.s.resetRemainingTime(); return false;}
+    document.getElementById('toggle-remaining').onclick = function() {opener.s.toggleRemainingTime(); return false;}
+    document.getElementById('reset-remaining').onclick = function() {opener.s.resetRemainingTime(); return false;}
+  });
+// ]]>
+</script>
+
+</head>
+
+<body>
+  
+  <div id="current-slide" class="slide"></div>
+  <div id="next-slide" class="slide"></div>
+  
+  <div id="current-notes" class="notes"></div>
+  <div id="next-notes" class="notes"></div>
+  
+  
+  <div class="timer" id="elapsed">
+    <h1>
+      <a href="#minimize-elapsed" id="minimize-elapsed">Elapsed Time</a>
+    </h1>
+    <ul>
+      <li>
+        <h2>Presentation</h2>
+        <span class="clock" id="elapsed-presentation">00:00:00</span>
+      </li>
+      <li>
+        <h2>Current Slide</h2>
+        <span class="clock" id="elapsed-slide">00:00:00</span>
+      </li>
+    </ul>
+    <div class="controls">
+      <a href="#reset-elapsed" id="reset-elapsed" title="Reset Elapsed Time">|&larr;</a>
+    </div>
+  </div>
+  
+  <div class="timer" id="remaining">
+    <h1>
+      <a href="#minimize-remaining" id="minimize-remaining" title="Minimize this box">Remaining Time</a>
+    </h1>
+    <p>
+      <a href="#subtract-remaining" class="control" id="minus" title="Subtract 5 Minutes">-</a>
+      <span class="clock" id="timeLeft">00:00:00</span>
+      <a href="#add-remaining" class="control" id="plus" title="Add 5 Minutes">+</a>
+    </p>
+    <div class="controls">
+      <form action="#" id="formy">
+        <input type="text" class="text" id="startFrom" value="0" size="4" maxlength="4" />
+        <a href="#toggle-remaining" id="toggle-remaining" title="Pause/Run Remaining Time">||</a>
+        <a href="#reset-remaining" id="reset-remaining" title="Reset Remaining Time">|&larr;</a>
+      </form>
+    </div>
+  </div>
+  
+</body>
+</html>
